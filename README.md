@@ -1,2 +1,2 @@
 # joshualeerogers.github.io
-[AI Resources](ai-resources/resources.html)
+[AI Resources](https://joshualeerogers.github.io/ai-resources/resources.html)
