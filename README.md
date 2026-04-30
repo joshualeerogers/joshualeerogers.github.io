@@ -1,2 +1,2 @@
 # joshualeerogers.github.io
-AI Resources
+[AI Resources](ai-resources/resources.html)
