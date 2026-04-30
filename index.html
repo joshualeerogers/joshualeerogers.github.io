@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A curated collection of AI resources, research, tools, and training materials accompanying the LC State Annual Research Symposium presentation 'AI in 2026: A Practical Overview' by Joshua L. Rogers.">
+    <meta name="author" content="Joshua L. Rogers">
+    <title>AI Resources &middot; Joshua L. Rogers</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --ink: #0a0a0a;
+            --paper: #f5f1e8;
+            --paper-soft: #ebe5d4;
+            --rule: #1a1a1a;
+            --accent: #c8421f;       /* terracotta red */
+            --accent-deep: #8b2d14;
+            --muted: #5a5550;
+            --highlight: #f9d949;    /* warning yellow */
+            --link: #1a3a8f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--paper);
+            color: var(--ink);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-image:
+                radial-gradient(ellipse at top left, rgba(200, 66, 31, 0.04) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(26, 58, 143, 0.03) 0%, transparent 50%);
+            min-height: 100vh;
+        }
+
+        /* Subtle paper grain */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.6;
+        }
+
+        a {
+            color: var(--link);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(26, 58, 143, 0.3);
+            transition: all 0.15s ease;
+        }
+
+        a:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        /* ─── HEADER / MASTHEAD ─────────────────────────────── */
+        .masthead {
+            position: relative;
+            z-index: 2;
+            border-bottom: 3px double var(--ink);
+            padding: 2.5rem 0 1.5rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .masthead-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--ink);
+            padding-bottom: 0.75rem;
+        }
+
+        .masthead-top .vol {
+            color: var(--accent-deep);
+            font-weight: 700;
+        }
+
+        h1.title {
+            font-family: 'Fraunces', Georgia, serif;
+            font-weight: 800;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            line-height: 0.95;
+            letter-spacing: -0.02em;
+            color: var(--ink);
+            margin-bottom: 0.5rem;
+        }
+
+        h1.title .ampersand {
+            font-style: italic;
+            font-weight: 400;
+            color: var(--accent);
+            font-family: 'Fraunces', serif;
+        }
+
+        .subtitle {
+            font-family: 'Fraunces', Georgia, serif;
+            font-style: italic;
+            font-size: 1.25rem;
+            color: var(--muted);
+            font-weight: 400;
+            max-width: 60ch;
+            margin-top: 0.75rem;
+        }
+
+        .byline {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--ink);
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--ink);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .byline strong {
+            font-weight: 700;
+        }
+
+        /* ─── INTRO LEDE ─────────────────────────────── */
+        .lede {
+            position: relative;
+            z-index: 2;
+            padding: 3rem 0 2rem;
+            border-bottom: 1px solid var(--ink);
+        }
+
+        .lede-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .lede-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--accent-deep);
+            font-weight: 700;
+        }
+
+        .lede-text {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 1.35rem;
+            line-height: 1.5;
+            color: var(--ink);
+        }
+
+        .lede-text::first-letter {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 4.5rem;
+            font-weight: 800;
+            float: left;
+            line-height: 0.85;
+            margin: 0.25rem 0.5rem 0 0;
+            color: var(--accent);
+        }
+
+        /* ─── TOC ─────────────────────────────── */
+        .toc {
+            position: relative;
+            z-index: 2;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--ink);
+        }
+
+        .toc-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--muted);
+            margin-bottom: 1rem;
+        }
+
+        .toc-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 0.5rem 2rem;
+            list-style: none;
+        }
+
+        .toc-list li {
+            font-family: 'Fraunces', serif;
+            font-size: 1rem;
+            display: flex;
+            align-items: baseline;
+            gap: 0.75rem;
+        }
+
+        .toc-list li .num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--accent);
+            font-weight: 700;
+            min-width: 1.75rem;
+        }
+
+        .toc-list li a {
+            border-bottom: none;
+            color: var(--ink);
+        }
+
+        .toc-list li a:hover {
+            color: var(--accent);
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        /* ─── SECTIONS ─────────────────────────────── */
+        section.resource-section {
+            position: relative;
+            z-index: 2;
+            padding: 3.5rem 0;
+            border-bottom: 1px solid var(--ink);
+        }
+
+        .section-header {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 1.5rem;
+            align-items: baseline;
+            margin-bottom: 2rem;
+        }
+
+        .section-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--paper);
+            background: var(--ink);
+            padding: 0.4rem 0.7rem;
+            letter-spacing: 0.1em;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        h2.section-title {
+            font-family: 'Fraunces', Georgia, serif;
+            font-weight: 800;
+            font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+            line-height: 1;
+            letter-spacing: -0.015em;
+        }
+
+        .section-blurb {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            color: var(--muted);
+            margin-bottom: 2rem;
+            max-width: 70ch;
+        }
+
+        /* ─── RESOURCE CARDS ─────────────────────────────── */
+        .resources {
+            display: grid;
+            gap: 1.25rem;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        }
+
+        .resource {
+            background: var(--paper-soft);
+            border: 1px solid var(--ink);
+            padding: 1.5rem;
+            position: relative;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .resource:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0 var(--ink);
+        }
+
+        .resource-tag {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 700;
+            padding: 0.2rem 0.5rem;
+            margin-bottom: 0.75rem;
+            border: 1px solid var(--ink);
+        }
+
+        .tag-paper { background: var(--highlight); color: var(--ink); }
+        .tag-tool { background: var(--accent); color: var(--paper); border-color: var(--accent); }
+        .tag-course { background: var(--ink); color: var(--paper); }
+        .tag-news { background: var(--paper); color: var(--ink); }
+        .tag-concept { background: #2d5a3d; color: var(--paper); border-color: #2d5a3d; }
+
+        .resource h3 {
+            font-family: 'Fraunces', Georgia, serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .resource h3 a {
+            color: var(--ink);
+            border-bottom: 2px solid transparent;
+        }
+
+        .resource h3 a:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        .resource .meta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+            margin-bottom: 0.75rem;
+        }
+
+        .resource p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: var(--ink);
+        }
+
+        .resource .slide-ref {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--muted);
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px dashed var(--muted);
+        }
+
+        .placeholder {
+            background: repeating-linear-gradient(
+                45deg,
+                var(--paper-soft),
+                var(--paper-soft) 10px,
+                rgba(249, 217, 73, 0.3) 10px,
+                rgba(249, 217, 73, 0.3) 20px
+            );
+        }
+
+        .placeholder::after {
+            content: 'TODO';
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            font-weight: 700;
+            background: var(--ink);
+            color: var(--highlight);
+            padding: 0.15rem 0.4rem;
+            letter-spacing: 0.1em;
+        }
+
+        /* ─── PULL QUOTE ─────────────────────────────── */
+        .pull-quote {
+            position: relative;
+            z-index: 2;
+            padding: 4rem 0;
+            border-bottom: 1px solid var(--ink);
+            background: var(--ink);
+            color: var(--paper);
+            margin: 0 -100vw;
+            padding-left: 100vw;
+            padding-right: 100vw;
+        }
+
+        .pull-quote-inner {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .pull-quote blockquote {
+            font-family: 'Fraunces', Georgia, serif;
+            font-style: italic;
+            font-size: clamp(1.5rem, 3vw, 2.25rem);
+            line-height: 1.3;
+            font-weight: 400;
+        }
+
+        .pull-quote blockquote::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--accent);
+            line-height: 0;
+            margin-right: 0.25rem;
+            vertical-align: -0.5rem;
+        }
+
+        .pull-quote cite {
+            display: block;
+            margin-top: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-style: normal;
+            color: var(--highlight);
+        }
+
+        /* ─── FRAMEWORK ROW ─────────────────────────────── */
+        .framework {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+            border: 2px solid var(--ink);
+            margin-top: 1rem;
+        }
+
+        .framework-step {
+            padding: 2rem 1.5rem;
+            border-right: 2px solid var(--ink);
+            position: relative;
+        }
+
+        .framework-step:last-child {
+            border-right: none;
+        }
+
+        .framework-step .num {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-weight: 800;
+            font-size: 3rem;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .framework-step h4 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .framework-step .tagline {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            color: var(--ink);
+        }
+
+        .framework-step p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* ─── FOOTER ─────────────────────────────── */
+        footer {
+            position: relative;
+            z-index: 2;
+            padding: 3rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--muted);
+        }
+
+        footer .container > div {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding-top: 1.5rem;
+            border-top: 3px double var(--ink);
+        }
+
+        footer a {
+            color: var(--ink);
+            border-bottom: 1px solid var(--muted);
+        }
+
+        /* ─── RESPONSIVE ─────────────────────────────── */
+        @media (max-width: 768px) {
+            .lede-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .section-header {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+
+            .framework {
+                grid-template-columns: 1fr;
+            }
+
+            .framework-step {
+                border-right: none;
+                border-bottom: 2px solid var(--ink);
+            }
+
+            .framework-step:last-child {
+                border-bottom: none;
+            }
+
+            .masthead-top, .byline {
+                font-size: 0.65rem;
+            }
+
+            .pull-quote blockquote::before {
+                font-size: 3rem;
+            }
+        }
+
+        @media print {
+            body { background: white; }
+            body::before { display: none; }
+            .resource { break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══ MASTHEAD ═══════════════════════════════════════ -->
+    <header class="masthead">
+        <div class="container">
+            <div class="masthead-top">
+                <span class="vol">Vol. 01 &middot; No. 01</span>
+                <span>LC State &middot; Annual Research Symposium</span>
+                <span>May 6, 2026</span>
+            </div>
+
+            <h1 class="title">AI Resources <span class="ampersand">&amp;</span> Further Reading</h1>
+            <p class="subtitle">A companion to the talk &ldquo;AI in 2026: A Practical Overview&rdquo; &mdash; tools, papers, courses, and concepts referenced from the slides.</p>
+
+            <div class="byline">
+                <span><strong>Curated by</strong> &nbsp;Joshua L. Rogers</span>
+                <span>Associate Professor &middot; Computer Information Technology</span>
+                <span>Technical &amp; Industrial Division</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ═══ LEDE ═══════════════════════════════════════ -->
+    <section class="lede">
+        <div class="container">
+            <div class="lede-grid">
+                <div class="lede-label">From the editor</div>
+                <p class="lede-text">The pace of change in AI between 2019 and 2026 has been dizzying &mdash; from a chaotic text-adventure model that turned bartenders into horses, to coding agents that compress a semester capstone into a lunch break. This page collects the underlying material referenced throughout the symposium talk, organized so you can dig deeper at your own pace.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ TABLE OF CONTENTS ═══════════════════════════════════════ -->
+    <nav class="toc">
+        <div class="container">
+            <div class="toc-title">In This Issue</div>
+            <ol class="toc-list">
+                <li><span class="num">I.</span><a href="#research">Scholarly Research</a></li>
+                <li><span class="num">II.</span><a href="#tools">AI Tools &amp; Platforms</a></li>
+                <li><span class="num">III.</span><a href="#concepts">Foundational Concepts</a></li>
+                <li><span class="num">IV.</span><a href="#agents">The Agent Landscape</a></li>
+                <li><span class="num">V.</span><a href="#training">Free Training &amp; Lessons</a></li>
+                <li><span class="num">VI.</span><a href="#news">News &amp; Education Channels</a></li>
+                <li><span class="num">VII.</span><a href="#approach">A Practical Approach</a></li>
+                <li><span class="num">VIII.</span><a href="#cybersecurity">Cybersecurity</a></li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- ═══ I. RESEARCH ═══════════════════════════════════════ -->
+    <section class="resource-section" id="research">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-num">§ I</span>
+                <h2 class="section-title">Scholarly Research</h2>
+            </div>
+            <p class="section-blurb">Peer-reviewed and preprint papers cited directly in the talk. Read them in full &mdash; the headlines rarely capture the nuance.</p>
+
+            <div class="resources">
+
+                <article class="resource">
+                    <span class="resource-tag tag-paper">Paper &middot; Preprint</span>
+                    <h3><a href="https://arxiv.org/abs/2506.08872" target="_blank" rel="noopener">Your Brain on ChatGPT: Accumulation of Cognitive Debt</a></h3>
+                    <div class="meta">Kosmyna et al. &middot; MIT Media Lab &middot; 2025</div>
+                    <p>The EEG study comparing AI-first writers to brain-only writers. Shows reduced neural connectivity and weaker recall in the LLM-assisted group. Note: still a preprint &mdash; treat findings as preliminary.</p>
+                    <div class="slide-ref">Referenced &middot; Slide 8 &ldquo;Your Thinking&rdquo;</div>
+                </article>
+
+                <article class="resource">
+                    <span class="resource-tag tag-paper">Paper</span>
+                    <h3><a href="https://www.media.mit.edu/projects/your-brain-on-chatgpt/overview/" target="_blank" rel="noopener">Project Page &mdash; &ldquo;Your Brain on ChatGPT&rdquo;</a></h3>
+                    <div class="meta">MIT Media Lab</div>
+                    <p>Official project hub from MIT Media Lab with author commentary, FAQ, and additional caveats from the lead researcher about how the findings should and should not be interpreted.</p>
+                    <div class="slide-ref">Companion to Slide 8</div>
+                </article>
+
+                <article class="resource">
+                    <span class="resource-tag tag-paper">Paper</span>
+                    <h3><a href="https://arxiv.org/abs/2510.05179" target="_blank" rel="noopener">Agentic Misalignment: How LLMs Could Be Insider Threats</a></h3>
+                    <div class="meta">Lynch et al. &middot; Anthropic &middot; 2025</div>
+                    <p>The red-team study testing 16 frontier models from Anthropic, OpenAI, Google, Meta, and xAI in simulated corporate environments. Documents blackmail, espionage, and information leakage when goals conflict with shutdown threats.</p>
+                    <div class="slide-ref">Referenced &middot; Slide 7 &ldquo;Year of Agents&rdquo;</div>
+                </article>
+
+                <article class="resource">
+                    <span class="resource-tag tag-paper">Code</span>
+                    <h3><a href="https://github.com/anthropic-experimental/agentic-misalignment" target="_blank" rel="noopener">Agentic Misalignment &mdash; Research Code</a></h3>
+                    <div class="meta">GitHub &middot; anthropic-experimental</div>
+                    <p>The actual scenario framework Anthropic used to elicit misaligned behavior. Useful if you want to inspect the prompts or reproduce the experiments yourself rather than trust the headlines.</p>
+                    <div class="slide-ref">Companion to Slide 7</div>
+                </article>
+
+                <article class="resource placeholder">
+                    <span class="resource-tag tag-paper">Paper</span>
+                    <h3><a href="#" target="_blank" rel="noopener">&ldquo;Embodied Brain Emulation&rdquo; &mdash; Eon Systems PBC, 2026</a></h3>
+                    <div class="meta">Eon Systems PBC &middot; 2026</div>
+                    <p>The fruit fly connectome simulation paper cited on Slide 5 &mdash; 140,000 neurons producing realistic walking, food-seeking, and grooming behavior with zero pre-programmed routines. <em>URL pending verification.</em></p>
+                    <div class="slide-ref">Referenced &middot; Slide 5 &ldquo;Foundations&rdquo;</div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ II. AI TOOLS ═══════════════════════════════════════ -->
+    <section class="resource-section" id="tools">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-num">§ II</span>
+                <h2 class="section-title">AI Tools &amp; Platforms</h2>
+            </div>
+            <p class="section-blurb">The applications, models, and platforms named throughout the talk &mdash; spanning seven years of progress from GPT-2 to Claude Opus 4.7.</p>
+
+            <div class="resources">
+
+                <article class="resource">
+                    <span class="resource-tag tag-tool">Tool</span>
+                    <h3><a href="https://claude.ai/" target="_blank" rel="noopener">Claude</a></h3>
+                    <div class="meta">Anthropic</div>
+                    <p>The conversational interface to Anthropic&rsquo;s Claude models. Free tier available. Useful for the &ldquo;revise&rdquo; step in the Create &rarr; Revise &rarr; Verify framework.</p>
+                    <div class="slide-ref">Referenced &middot; Slides 3, 4, 6</div>
+                </article>
+
+                <article class="resource">
+                    <span class="resource-tag tag-tool">Tool</span>
+                    <h3><a href="https://www.claude.com/product/claude-code" target="_blank" rel="noopener">Claude Code</a></h3>
+                    <div class="meta">Anthropic &middot; CLI &amp; IDE</div>
+                    <p>The agentic coding tool demonstrated in Snapshot 2. Operates from the terminal, writes and tests code, and turns &ldquo;semester capstone&rdquo; projects into lunch-hour exercises.</p>
+                    <div class="slide-ref">Referenced &middot; Slides 3, 4, 6</div>
+                </article>
+
+                <article class="resource">
+                    <span class="resource-tag tag-tool">Tool &middot; Historical</span>
+                    <h3><a href="https://aidungeon.com/" target="_blank" rel="noopener">AI Dungeon</a></h3>
+                    <div class="meta">Latitude &middot; Originally GPT-2 (2019)</div>
+                    <p>The text adventure game from Snapshot 1. The original 2019 version powered by GPT-2 had a 1,024-token context window &mdash; about 750 words &mdash; and was famously incoherent. The modern version runs on contemporary models.</p>
+                    <div class="slide-ref">Referenced &middot; Slides 2, 4</div>
+                </article>
+
+                <article class="resource">
+                    <span class="resource-tag tag-tool">Streamer</span>
+                    <h3><a href="https://www.twitch.tv/vedal987" target="_blank" rel="noopener">Neuro-sama (Twitch &middot; Vedal987)</a></h3>
+                    <div class="meta">Created by Vedal &middot; AI VTuber</div>
+                    <p>The autonomous AI VTuber referenced on Slide 6. Streams independently, plays games, sings, and moderates her own chat. As of January 2026, the most-subscribed channel on Twitch.</p>
+                    <div class="slide-ref">Referenced &middot; Slide 6 &ldquo;Tier 1: Chatbots With Autonomy&rdquo;</div>
+                </article>
+
+                <article class="resource placeholder">
+                    <span class="resource-tag tag-tool">Platform</span>
+                    <h3><a href="#" target="_blank" rel="noopener">Moltbook</a></h3>
+                    <div class="meta">Acquired by Meta &middot; March 2026</div>
+                    <p>The agents-only social network from Snapshot 3. Launched January 28, 2026; acquired by Meta six weeks later. Source of the &ldquo;Crustafarianism&rdquo; emergent religion. <em>URL pending verification.</em></p>
+                    <div class="slide-ref">Referenced &middot; Slide 7</div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ PULL QUOTE ═══════════════════════════════════════ -->
+    <section class="pull-quote">
+        <div class="pull-quote-inner">
+            <blockquote>
+                Predicting where AI will be in twenty years based on current tech is like asking a Victorian-era engineer to accurately predict the processes and technologies needed for a crewed moon mission based on their knowledge of steam engines.
+            </blockquote>
+            <cite>&mdash; Closing remarks, Slide 10</cite>
+        </div>
+    </section>
+
+    <!-- ═══ III. FOUNDATIONAL CONCEPTS ═══════════════════════════════════════ -->
+    <section class="resource-section" id="concepts">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-num">§ III</span>
+                <h2 class="section-title">Foundational Concepts</h2>
+            </div>
+            <p class="section-blurb">The ideas and vocabulary you need to follow modern AI conversations &mdash; emergence, scale, context windows, and what makes 2026 different.</p>
+
+            <div class="resources">
+
+                <article class="resource">
+                    <span class="resource-tag tag-concept">Concept</span>
+                    <h3><a href="https://en.wikipedia.org/wiki/Emergent_abilities_of_large_language_models" target="_blank" rel="noopener">Emergent Abilities of LLMs</a></h3>
+                    <div class="meta">Wikipedia &middot; survey article</div>
+                    <p>The phenomenon where scaling up a network produces capabilities &mdash; translation, multi-step reasoning, introspection &mdash; that nobody explicitly programmed. A practical entry point with citations to primary literature.</p>
+                    <div class="slide-ref">Referenced &middot; Slide 5</div>
+                </article>
+
+                <article class="resource">
+                    <span class="resource-tag tag-concept">Concept</span>
+                    <h3><a href="https://en.wikipedia.org/wiki/Connectome" target="_blank" rel="noopener">Connectomics &amp; Brain Emulation</a></h3>
+                    <div class="meta">Wikipedia &middot; reference</div>
+                    <p>Background on what it means to map and simulate a complete neural wiring diagram. The fruit fly connectome project on Slide 5 illustrates how structure alone can produce realistic behavior.</p>
+                    <div class="slide-ref">Companion to Slide 5</div>
+                </article>
+
+                <article class="resource">
+                    <span class="resource-tag tag-concept">Concept</span>
+                    <h3><a href="https://en.wikipedia.org/wiki/Context_window" target="_blank" rel="noopener">What Is a Context Window?</a></h3>
+                    <div class="meta">Wikipedia &middot; reference</div>
+                    <p>Explains the &ldquo;active memory&rdquo; concept used on Slide 4. The 1,024-token window of GPT-2 vs. the 1,000,000-token window of Claude Opus 4.7 is roughly the difference between holding a short essay and the entire Lord of the Rings trilogy.</p>
+                    <div class="slide-ref">Companion to Slide 4</div>
+                </article>
+
+                <article class="resource">
+                    <span class="resource-tag tag-concept">Reading</span>
+                    <h3><a href="https://www.darioamodei.com/essay/machines-of-loving-grace" target="_blank" rel="noopener">Machines of Loving Grace</a></h3>
+                    <div class="meta">Dario Amodei &middot; CEO, Anthropic</div>
+                    <p>A long-form essay on what powerful AI could plausibly accomplish in the near term across science, health, and governance. Useful framing for the &ldquo;1903 stage&rdquo; analogy on Slide 6.</p>
+                    <div class="slide-ref">Companion to Slide 6</div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ IV. AGENT LANDSCAPE ═══════════════════════════════════════ -->
+    <section class="resource-section" id="agents">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-num">§ IV</span>
+                <h2 class="section-title">The Agent Landscape</h2>
+            </div>
+            <p class="section-blurb">Resources covering the three-tier framework on Slide 6 &mdash; from chatbots with autonomy to general-purpose agents that act independently.</p>
+
+            <div class="resources">
+
+                <article class="resource">
+                    <span class="resource-tag tag-concept">Reading</span>
+                    <h3><a href="https://www.anthropic.com/research/building-effective-agents" target="_blank" rel="noopener">Building Effective Agents</a></h3>
+                    <div class="meta">Anthropic Research</div>
+                    <p>Practical primer on agent architectures &mdash; what counts as an &ldquo;agent&rdquo; vs. a workflow, when to use which pattern, and the failure modes you should expect.</p>
+                    <div class="slide-ref">Companion to Slide 6</div>
+                </article>
+
+                <article class="resource">
+                    <span class="resource-tag tag-tool">Protocol</span>
+                    <h3><a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">Model Context Protocol (MCP)</a></h3>
+                    <div class="meta">Open standard</div>
+                    <p>The emerging open standard for how AI agents connect to external tools, data sources, and applications. Increasingly the plumbing behind &ldquo;Tier 3&rdquo; autonomous agents.</p>
+                    <div class="slide-ref">Companion to Slide 6 (Tier 3)</div>
+                </article>
+
+                <article class="resource">
+                    <span class="resource-tag tag-tool">Tool</span>
+                    <h3><a href="https://www.claude.com/product/claude-for-chrome" target="_blank" rel="noopener">Claude for Chrome</a></h3>
+                    <div class="meta">Anthropic &middot; Browser agent</div>
+                    <p>An example of a general-purpose autonomous agent &mdash; reads pages, fills forms, navigates between sites. Currently in beta and explicitly noted as a research preview.</p>
+                    <div class="slide-ref">Companion to Slide 6 (Tier 3)</div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ V. FREE TRAINING ═══════════════════════════════════════ -->
+    <section class="resource-section" id="training">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-num">§ V</span>
+                <h2 class="section-title">Free Training &amp; Lessons</h2>
+            </div>
+            <p class="section-blurb">Self-paced, no-cost coursework for building real skills. Bookmarked from Slide 11. Most NVIDIA DLI courses include hands-on GPU labs and certificates of completion.</p>
+
+            <div class="resources">
+
+                <article class="resource">
+                    <span class="resource-tag tag-course">Course Hub</span>
+                    <h3><a href="https://www.nvidia.com/en-us/training/" target="_blank" rel="noopener">NVIDIA Deep Learning Institute (DLI)</a></h3>
+                    <div class="meta">NVIDIA &middot; self-paced &amp; instructor-led</div>
+                    <p>The main entry point. Browse by topic (generative AI, computer vision, accelerated computing) or by experience level. Many courses are free; some require an NVIDIA Developer Program membership.</p>
+                    <div class="slide-ref">Referenced &middot; Slide 11</div>
+                </article>
+
+                <article class="resource">
+                    <span class="resource-tag tag-course">Course &middot; Beginner</span>
+                    <h3><a href="https://www.nvidia.com/en-us/training/self-paced-courses/" target="_blank" rel="noopener">Self-Paced Course Catalog</a></h3>
+                    <div class="meta">NVIDIA DLI</div>
+                    <p>The full searchable catalog of self-paced courses. Filter by &ldquo;free&rdquo; to see no-cost options like &ldquo;Generative AI Explained&rdquo; and &ldquo;Building a Brain in 10 Minutes.&rdquo;</p>
+                    <div class="slide-ref">Referenced &middot; Slide 11</div>
+                </article>
+
+                <article class="resource">
+                    <span class="resource-tag tag-course">Learning Path</span>
+                    <h3><a href="https://www.nvidia.com/en-us/learn/" target="_blank" rel="noopener">NVIDIA Learning Paths</a></h3>
+                    <div class="meta">NVIDIA</div>
+                    <p>Curated sequences combining training, certification, and developer resources. Useful if you don&rsquo;t know which individual course to start with.</p>
+                    <div class="slide-ref">Referenced &middot; Slide 11</div>
+                </article>
+
+                <article class="resource">
+                    <span class="resource-tag tag-course">Course &middot; Beginner</span>
+                    <h3><a href="https://www.deeplearning.ai/short-courses/" target="_blank" rel="noopener">DeepLearning.AI Short Courses</a></h3>
+                    <div class="meta">Andrew Ng &middot; usually 1&ndash;2 hours each</div>
+                    <p>Free short courses built in collaboration with major AI labs (OpenAI, Anthropic, LangChain, etc.). Strong for prompt engineering, RAG, agents, and evaluation fundamentals.</p>
+                    <div class="slide-ref">Recommended addition</div>
+                </article>
+
+                <article class="resource">
+                    <span class="resource-tag tag-course">Documentation</span>
+                    <h3><a href="https://docs.claude.com/" target="_blank" rel="noopener">Claude Developer Documentation</a></h3>
+                    <div class="meta">Anthropic</div>
+                    <p>Official documentation for Claude, the API, Claude Code, and prompting techniques. The &ldquo;Prompt Engineering&rdquo; section in particular is a useful reference.</p>
+                    <div class="slide-ref">Recommended addition</div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ VI. NEWS ═══════════════════════════════════════ -->
+    <section class="resource-section" id="news">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-num">§ VI</span>
+                <h2 class="section-title">News &amp; Education Channels</h2>
+            </div>
+            <p class="section-blurb">YouTube channels and newsletters for staying current. AI moves fast &mdash; what was true six months ago may already be obsolete.</p>
+
+            <div class="resources">
+
+                <article class="resource">
+                    <span class="resource-tag tag-news">YouTube</span>
+                    <h3><a href="https://www.youtube.com/@TwoMinutePapers" target="_blank" rel="noopener">Two Minute Papers</a></h3>
+                    <div class="meta">K&aacute;roly Zsolnai-Feh&eacute;r &middot; research summaries</div>
+                    <p>Short, accessible summaries of new AI research papers. Strong on graphics, simulation, and generative models. Good for quickly knowing &ldquo;is this paper important?&rdquo;</p>
+                    <div class="slide-ref">Suggested for Slide 11</div>
+                </article>
+
+                <article class="resource">
+                    <span class="resource-tag tag-news">YouTube</span>
+                    <h3><a href="https://www.youtube.com/@3blue1brown" target="_blank" rel="noopener">3Blue1Brown</a></h3>
+                    <div class="meta">Grant Sanderson &middot; deep visual explainers</div>
+                    <p>The neural networks and transformers series remain among the clearest visual explanations of how modern AI works. Time-tested and worth re-watching as the field evolves.</p>
+                    <div class="slide-ref">Suggested for Slide 11</div>
+                </article>
+
+                <article class="resource">
+                    <span class="resource-tag tag-news">YouTube</span>
+                    <h3><a href="https://www.youtube.com/@AIExplained-Official" target="_blank" rel="noopener">AI Explained</a></h3>
+                    <div class="meta">Philip &middot; weekly news &amp; analysis</div>
+                    <p>Weekly news roundups with careful sourcing. Less hype-driven than most AI YouTube; willing to push back on inflated claims from labs.</p>
+                    <div class="slide-ref">Suggested for Slide 11</div>
+                </article>
+
+                <article class="resource placeholder">
+                    <span class="resource-tag tag-news">YouTube</span>
+                    <h3><a href="#" target="_blank" rel="noopener">[Add your preferred channels]</a></h3>
+                    <div class="meta">TBD</div>
+                    <p>Slot for additional channels referenced on the LCSC faculty page. <em>Replace with the specific channels you reference.</em></p>
+                    <div class="slide-ref">Referenced &middot; Slide 11</div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ VII. PRACTICAL APPROACH ═══════════════════════════════════════ -->
+    <section class="resource-section" id="approach">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-num">§ VII</span>
+                <h2 class="section-title">A Practical Approach</h2>
+            </div>
+            <p class="section-blurb">The Create &rarr; Revise &rarr; Verify framework from Slide 9, with reading suggestions for going deeper on each step.</p>
+
+            <div class="framework">
+                <div class="framework-step">
+                    <div class="num">1</div>
+                    <h4>Create</h4>
+                    <div class="tagline">You first.</div>
+                    <p>Outline. Draft. Sketch. Get your own thinking onto the page before any AI sees it. The Kosmyna study suggests this preserves engagement and recall.</p>
+                </div>
+                <div class="framework-step">
+                    <div class="num">2</div>
+                    <h4>Revise</h4>
+                    <div class="tagline">AI second.</div>
+                    <p>Now bring AI in. Ask it to critique, suggest, expand, or polish what you&rsquo;ve already built. Use it as a sparring partner, not a ghostwriter.</p>
+                </div>
+                <div class="framework-step">
+                    <div class="num">3</div>
+                    <h4>Verify</h4>
+                    <div class="tagline">You last.</div>
+                    <p>Check the AI&rsquo;s work. It will be confidently wrong some of the time. Catching errors is your responsibility &mdash; not the model&rsquo;s.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ VIII. CYBERSECURITY ═══════════════════════════════════════ -->
+    <section class="resource-section" id="cybersecurity">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-num">§ VIII</span>
+                <h2 class="section-title">Cybersecurity &amp; Agent-vs-Agent</h2>
+            </div>
+            <p class="section-blurb">Resources on the &ldquo;agent vs. agent&rdquo; reality from Slide 8 &mdash; where IT defenders need AI teammates because human reaction time is no longer adequate.</p>
+
+            <div class="resources">
+
+                <article class="resource">
+                    <span class="resource-tag tag-tool">Vendor</span>
+                    <h3><a href="https://www.f5.com/solutions/use-cases/ai" target="_blank" rel="noopener">F5 AI Solutions</a></h3>
+                    <div class="meta">F5 Inc.</div>
+                    <p>The vendor cited on Slide 8. Application delivery and security solutions designed around AI workloads &mdash; including AI Gateway, Distributed Cloud Services, and protections aimed specifically at agent-driven traffic.</p>
+                    <div class="slide-ref">Referenced &middot; Slide 8</div>
+                </article>
+
+                <article class="resource">
+                    <span class="resource-tag tag-paper">Framework</span>
+                    <h3><a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/" target="_blank" rel="noopener">OWASP Top 10 for LLM Applications</a></h3>
+                    <div class="meta">OWASP &middot; community-maintained</div>
+                    <p>The defensive checklist for anyone deploying LLMs or agents in production: prompt injection, insecure output handling, supply-chain risks, and more. Updated as the field evolves.</p>
+                    <div class="slide-ref">Recommended addition</div>
+                </article>
+
+                <article class="resource">
+                    <span class="resource-tag tag-paper">Framework</span>
+                    <h3><a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener">NIST AI Risk Management Framework</a></h3>
+                    <div class="meta">U.S. NIST</div>
+                    <p>The official U.S. risk management framework for AI systems. Useful vocabulary and structure for institutions building AI governance policy.</p>
+                    <div class="slide-ref">Recommended addition</div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ FOOTER ═══════════════════════════════════════ -->
+    <footer>
+        <div class="container">
+            <div>
+                <span>&copy; 2026 Joshua L. Rogers</span>
+                <span><a href="https://www.lcsc.edu/faculty-staff-directory/joshua-l-rogers" target="_blank" rel="noopener">Faculty Page &middot; LCSC</a></span>
+                <span>Last updated: April 2026</span>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
